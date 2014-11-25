@@ -8,6 +8,12 @@ JDBC (Java Database Connectivity) é uma tecnologia de conectividade de bases de
 Esta tecnologia é uma API para a linguagem de programação Java que permite aceder a bases de dados relacionais.
 Fornece interfaces e classes com métodos para consultar e modificar os dados.
 
+O que vais aprender durante o turorial?
+---------------------------------------
+
+Com este tutorial vais aprender a estabelecer ligações a bases de dados relacionais utilizando a linguagem de programação Java, assim como consultar e modificar os dados.
+Vais também saber como organizar o código de acesso a dados em classes próprias, utilizando DAOs (Data Access Object).
+
 Pré-requisitos
 --------------
 
@@ -36,12 +42,6 @@ E introduzir os comandos:
 > create table zombies (id integer not null auto_increment primary key, name varchar(20), graveyard varchar(50));
 
 > create table tweets (id integer not null auto_increment primary key, zombie_id integer not null, text varchar(200), pub_date date, foreign key (zombie_id) references zombies(id));
-
-O que vais aprender durante o turorial?
----------------------------------------
-
-Com este tutorial vais aprender a estabelecer ligações a bases de dados relacionais utilizando a linguagem de programação Java, assim como consultar e modificar os dados.
-Vais também saber como organizar o código de acesso a dados em classes próprias, utilizando DAOs (Data Access Object).
 
 Como começar?
 -------------
