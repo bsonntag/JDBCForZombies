@@ -35,7 +35,7 @@ public final class RepositoryFactory {
     private static String DB_TYPE = "postgresql";
     private static String HOST = "localhost";
     private static String PORT = "5432";
-    private static String USERNAME = "admin";
+    private static String USER = "admin";
     private static String PASSWORD = "123456";
     private static String DATABASE = "zombiedb";
     
@@ -47,7 +47,7 @@ public final class RepositoryFactory {
     
     public static ZombieRepository getZombieRepository() {
         if(zombieRepository == null) {
-            zombieRepository = new ZombieRepository(getURL(), USERNAME, PASSWORD);
+            zombieRepository = new ZombieRepository(getURL(), USER, PASSWORD);
         }
         return zombieRepository;
     }
@@ -56,7 +56,7 @@ public final class RepositoryFactory {
         DB_TYPE = props.getOrDefault("db_type", DB_TYPE).toString();
         HOST = props.getOrDefault("host", HOST).toString();
         PORT = props.getOrDefault("port", PORT).toString();
-        USERNAME = props.getOrDefault("username", USERNAME).toString();
+        USER = props.getOrDefault("user", USER).toString();
         PASSWORD = props.getOrDefault("password", PASSWORD).toString();
         DATABASE = props.getOrDefault("database", DATABASE).toString();
     }
