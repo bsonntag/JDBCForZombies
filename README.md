@@ -18,3 +18,8 @@ Onde começar?
 -------------
 
 Podes começar [aqui](https://github.com/bsonntag/JDBCForZombies/tree/master/JDBCForZombies_v1).
+
+Sobre
+-----
+
+Este tutorial foi criado para o workshop de JDBC do [Cesium](http://www.cesium.di.uminho.pt/), e foi inspirado em [Rails For Zombies](http://railsforzombies.org/).
