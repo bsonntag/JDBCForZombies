@@ -49,6 +49,8 @@ public class ZombieRepository extends AbstractRepository<Zombie> {
     private static final String DELETE_ZOMBIE = "delete from zombies where id = ?";
     private static final String DELETE_ZOMBIES = "delete from zombies";
     
+    private static final String COUNT_ZOMBIES = "select count(*) as n from zombies";
+    
     
     private final String url;
     private final String user;
@@ -213,8 +215,26 @@ public class ZombieRepository extends AbstractRepository<Zombie> {
     
     @Override
     public long count() throws PersistenceException {
-        // TODO code application logic here
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            int count;
+            
+            Connection connection = DriverManager.getConnection(url, user, password);
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(COUNT_ZOMBIES);
+
+            try {
+                count = result.getInt("n");
+            }
+            finally {
+                statement.close();
+                connection.close();
+            }
+            
+            return count;
+        }
+        catch (SQLException ex) {
+            throw new PersistenceException("Error deleting zombies", ex);
+        }
     }
     
 }
