@@ -41,6 +41,8 @@ public final class RepositoryFactory {
     
     private static ZombieRepository zombieRepository;
     
+    private static TweetRepository tweetRepository;
+    
     
     private RepositoryFactory() { }
     
@@ -50,6 +52,13 @@ public final class RepositoryFactory {
             zombieRepository = new ZombieRepository(getURL(), USER, PASSWORD);
         }
         return zombieRepository;
+    }
+    
+    public static TweetRepository getTweetRepository() {
+        if(tweetRepository == null) {
+            tweetRepository = new TweetRepository(getURL(), USER, PASSWORD);
+        }
+        return tweetRepository;
     }
     
     public static void setProperties(Properties props) {
