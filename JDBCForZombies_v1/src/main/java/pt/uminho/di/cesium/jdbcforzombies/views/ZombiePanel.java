@@ -52,7 +52,6 @@ public class ZombiePanel extends javax.swing.JPanel {
         tableModel = (ZombieTableModel)jTable1.getModel();
         
         zombieRepository = RepositoryFactory.getZombieRepository();
-        System.out.println("starting fetch");
         try {
             Iterable<Zombie> zombies = zombieRepository.findAll();
             for(Zombie zombie : zombies) {
@@ -63,7 +62,6 @@ public class ZombiePanel extends javax.swing.JPanel {
         catch (PersistenceException ex) {
             ex.printStackTrace();
         }
-        System.out.println("finished fetch");
         
         jTable1.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
