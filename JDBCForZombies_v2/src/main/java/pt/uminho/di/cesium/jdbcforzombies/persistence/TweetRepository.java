@@ -32,6 +32,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import pt.uminho.di.cesium.jdbcforzombies.models.Tweet;
+import pt.uminho.di.cesium.jdbcforzombies.models.Zombie;
 
 /**
  * TweetRepository
@@ -42,6 +43,7 @@ public class TweetRepository extends AbstractRepository<Tweet> {
     
     private static final String SELECT_TWEETS = "select id, zombie_id, text, pub_date from tweets";
     private static final String SELECT_TWEET = "select id, zombie_id, text, pub_date from tweets where id = ?";
+    private static final String SELECT_BY_ZOMBIE = "select id, text, pub_date from tweets where zombie_id = ?";
     
     private static final String INSERT_TWEET = "insert into tweets (zombie_id, text, pub_date) values (?, ?, ?)";
     private static final String UPDATE_TWEET = "update tweets set text = ? where id = ?";
@@ -116,8 +118,9 @@ public class TweetRepository extends AbstractRepository<Tweet> {
             Tweet tweet;
             
             Connection connection = DriverManager.getConnection(url, user, password);
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(SELECT_TWEET);
+            PreparedStatement statement = connection.prepareStatement(SELECT_TWEET);
+            statement.setLong(1, id);
+            ResultSet result = statement.executeQuery();
             
             try {
                 if(result.next()) {
@@ -246,6 +249,44 @@ public class TweetRepository extends AbstractRepository<Tweet> {
         }
         catch (SQLException ex) {
             throw new PersistenceException("Error deleting zombies", ex);
+        }
+    }
+    
+    
+    public Iterable<Tweet> findByZombie(Zombie zombie) throws PersistenceException {
+        try {
+            List<Tweet> tweets = new ArrayList<>();
+            
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement(SELECT_BY_ZOMBIE);
+            statement.setLong(1, zombie.getId());
+            ResultSet result = statement.executeQuery();
+            
+            try {
+                while(result.next()) {
+                    Tweet tweet = new Tweet();
+                    tweet.setId(result.getLong("id"));
+                    tweet.setText(result.getString("text"));
+
+                    java.util.Date date = new java.util.Date(result.getDate("pub_date").getTime());
+                    tweet.setPublishDate(date);
+                    
+                    tweet.setZombie(zombie);
+                    
+                    tweets.add(tweet);
+                    zombie.addTweet(tweet);
+                }
+            }
+            finally {
+                result.close();
+                statement.close();
+                connection.close();
+            }
+            
+            return tweets;
+        }
+        catch (SQLException ex) {
+            throw new PersistenceException("Error fetching tweets", ex);
         }
     }
     

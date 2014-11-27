@@ -100,6 +100,8 @@ public class ZombieRepository extends AbstractRepository<Zombie> {
                 statement.close();
                 connection.close();
             }
+            
+            RepositoryFactory.getTweetRepository().saveAll(zombie.getTweets());
         }
         catch (SQLException ex) {
             throw new PersistenceException("Error saving zombie: " + zombie, ex);

@@ -23,6 +23,11 @@
 
 package pt.uminho.di.cesium.jdbcforzombies.models;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Zombie
  *
@@ -30,22 +35,25 @@ package pt.uminho.di.cesium.jdbcforzombies.models;
  */
 public class Zombie {
     
-    private long id;
+    private long id = -1;
     
     private String name;
     
     private String graveyard;
-
+    
+    private final Set<Tweet> tweets = new HashSet<>();
+    
+    
     public Zombie() {
         
     }
-
+    
     public Zombie(String name, String graveyard) {
-        this.id = -1;
         this.name = name;
         this.graveyard = graveyard;
     }
-
+    
+    
     public long getId() {
         return id;
     }
@@ -70,10 +78,35 @@ public class Zombie {
         this.graveyard = graveyard;
     }
 
+    public Collection<Tweet> getTweets() {
+        return Collections.<Tweet>unmodifiableCollection(tweets);
+    }
+    
+    public boolean addTweet(Tweet tweet) {
+        if(tweets.contains(tweet)) {
+            return false;
+        }
+        else {
+            tweet.setZombie(this);
+            tweets.add(tweet);
+            return true;
+        }
+    }
+    
+    public boolean removeTweet(Tweet tweet) {
+        if(tweets.contains(tweet)) {
+            tweets.remove(tweet);
+            tweet.setZombie(null);
+            return false;
+        }
+        else {
+            return false;
+        }
+    }
+    
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 17 + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -82,19 +115,18 @@ public class Zombie {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        else if (getClass() != obj.getClass()) {
             return false;
         }
-        final Zombie other = (Zombie) obj;
-        if (this.id != other.id) {
-            return false;
+        else {
+            final Zombie other = (Zombie) obj;
+            return this.id == other.id;
         }
-        return true;
     }
 
     @Override
     public String toString() {
-        return "Zombie{" + "id=" + id + ", name=" + name + ", graveyard=" + graveyard + '}';
+        return "Zombie{id=" + id + ", name=" + name + ", graveyard=" + graveyard + '}';
     }
     
 }

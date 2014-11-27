@@ -32,25 +32,26 @@ import java.util.Date;
  */
 public class Tweet {
     
-    private long id;
+    private long id = -1;
     
     private Zombie zombie;
     
     private String text;
     
     private Date publishDate;
-
+    
+    
     public Tweet() {
         
     }
-
+    
     public Tweet(Zombie zombie, String text, Date publishDate) {
-        this.id = -1;
         this.zombie = zombie;
         this.text = text;
         this.publishDate = publishDate;
     }
-
+    
+    
     public long getId() {
         return id;
     }
@@ -85,8 +86,7 @@ public class Tweet {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 43 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 43 + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -95,19 +95,19 @@ public class Tweet {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        else if (getClass() != obj.getClass()) {
             return false;
         }
-        final Tweet other = (Tweet) obj;
-        if (this.id != other.id) {
-            return false;
+        else {
+            final Tweet other = (Tweet) obj;
+            return this.id == other.id;
         }
-        return true;
     }
 
     @Override
     public String toString() {
-        return "Tweet{" + "id=" + id + ", zombie=" + zombie + ", text=" + text + ", publishDate=" + publishDate + '}';
+        return "Tweet{id=" + id + ", zombie=" + zombie.getName() +
+               ", text=" + text + ", publishDate=" + publishDate + '}';
     }
     
 }
