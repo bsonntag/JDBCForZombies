@@ -8,7 +8,7 @@
     <modules>
         <module>JDBCForZombies_v1</module>
         <module>JDBCForZombies_v2</module>
-        <module>JDBCForZombies_V3</module>
+        <module>JDBCForZombies_v3</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
