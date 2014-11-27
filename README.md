@@ -48,6 +48,17 @@ Como começar?
 
 Podes começar [aqui](https://github.com/bsonntag/JDBCForZombies/tree/master/JDBCForZombies_v1).
 
+FAQ
+---
+
+1. Onde posso encontrar o driver de MySQL?
+   O driver de MySQL (Connector-J) pode ser sacado aqui: http://dev.mysql.com/.../mysql-connector-java-5.1.34.zip
+
+2. Como adiciono o driver ao classpath?
+   Basta adicionares o jar do *driver* às *libraries* do teu projeto no teu IDE.
+   Se mesmo assim tiveres problemas podes experimentar algo como:
+   > Class.forName("org.postgresql.Driver");
+
 Sobre
 -----
 
