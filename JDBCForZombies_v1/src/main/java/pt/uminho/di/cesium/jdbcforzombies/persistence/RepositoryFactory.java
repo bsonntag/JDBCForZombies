@@ -39,18 +39,9 @@ public final class RepositoryFactory {
     private static String PASSWORD = "123456";
     private static String DATABASE = "zombiedb";
     
-    private static ZombieRepository zombieRepository;
-    
     
     private RepositoryFactory() { }
     
-    
-    public static ZombieRepository getZombieRepository() {
-        if(zombieRepository == null) {
-            zombieRepository = new ZombieRepository(getURL(), USER, PASSWORD);
-        }
-        return zombieRepository;
-    }
     
     public static void setProperties(Properties props) {
         DB_TYPE = props.getOrDefault("db_type", DB_TYPE).toString();

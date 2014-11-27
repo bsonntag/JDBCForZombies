@@ -24,11 +24,7 @@
 package pt.uminho.di.cesium.jdbcforzombies;
 
 import java.util.Properties;
-import javax.swing.UnsupportedLookAndFeelException;
-import pt.uminho.di.cesium.jdbcforzombies.models.Zombie;
 import pt.uminho.di.cesium.jdbcforzombies.persistence.RepositoryFactory;
-import pt.uminho.di.cesium.jdbcforzombies.persistence.ZombieRepository;
-import pt.uminho.di.cesium.jdbcforzombies.views.GUI;
 
 /**
  * Main
@@ -49,30 +45,7 @@ public class Main {
         props.setProperty("db_type", "mysql");
         RepositoryFactory.setProperties(props);
         
-        /* Set the Nimbus look and feel */
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        }
-        catch (ClassNotFoundException | InstantiationException |
-               IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        }
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GUI().setVisible(true);
-            }
-        });
+        // TODO Create some zombies and save them to the database
     }
     
 }
