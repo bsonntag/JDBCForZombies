@@ -29,6 +29,7 @@ import java.util.Collection;
  * Repository
  *
  * @author Benjamim Sonntag
+ * @param <T> the type of the entities in this Repository
  */
 public interface Repository<T> {
     
@@ -39,9 +40,9 @@ public interface Repository<T> {
     public Iterable<T> findAll() throws PersistenceException;
     public Iterable<T> findAll(Collection<Long> ids) throws PersistenceException;
     
-    public void delete(long id) throws PersistenceException;
+    public void delete(T entity) throws PersistenceException;
     public void deleteAll() throws PersistenceException;
-    public void deleteAll(Collection<Long> ids) throws PersistenceException;
+    public void deleteAll(Collection<T> entities) throws PersistenceException;
     
     public long count() throws PersistenceException;
     

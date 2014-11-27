@@ -189,15 +189,17 @@ public class TweetRepository extends AbstractRepository<Tweet> {
     }
 
     @Override
-    public void delete(long id) throws PersistenceException {
+    public void delete(Tweet tweet) throws PersistenceException {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             PreparedStatement statement = connection.prepareStatement(DELETE_TWEET);
             
-            statement.setLong(1, id);
+            statement.setLong(1, tweet.getId());
             
             try {
                 statement.executeUpdate();
+                tweet.getZombie().removeTweet(tweet);
+                tweet.setId(-1);
             }
             finally {
                 statement.close();
@@ -205,7 +207,7 @@ public class TweetRepository extends AbstractRepository<Tweet> {
             }
         }
         catch (SQLException ex) {
-            throw new PersistenceException("Error deleting tweet: " + id, ex);
+            throw new PersistenceException("Error deleting tweet: " + tweet, ex);
         }
     }
 

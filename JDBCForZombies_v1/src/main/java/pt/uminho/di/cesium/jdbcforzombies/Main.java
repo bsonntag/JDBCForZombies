@@ -45,9 +45,9 @@ public class Main {
         props.setProperty("db_type", "mysql");
         RepositoryFactory.setProperties(props);
         
-        // TODO Create some zombies and save them to the database
+        // TODO Create some zombies and save them in the database
         
-        // TODO Add zome tweets to the zombies and save them to the database
+        // TODO Add zome tweets to the zombies and save them in the database
     }
     
 }

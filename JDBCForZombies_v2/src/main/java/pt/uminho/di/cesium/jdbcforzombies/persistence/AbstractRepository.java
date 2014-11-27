@@ -31,6 +31,7 @@ import java.util.List;
  * AbstractRepository
  *
  * @author Benjamim Sonntag
+ * @param <T> the type of the entities in this Repository
  */
 public abstract class AbstractRepository<T> implements Repository<T> {
 
@@ -51,9 +52,9 @@ public abstract class AbstractRepository<T> implements Repository<T> {
     }
 
     @Override
-    public void deleteAll(Collection<Long> ids) throws PersistenceException {
-        for(long id : ids) {
-            delete(id);
+    public void deleteAll(Collection<T> entities) throws PersistenceException {
+        for(T entity : entities) {
+            delete(entity);
         }
     }
 

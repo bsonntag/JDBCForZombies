@@ -176,15 +176,18 @@ public class ZombieRepository extends AbstractRepository<Zombie> {
     }
     
     @Override
-    public void delete(long id) throws PersistenceException {
+    public void delete(Zombie zombie) throws PersistenceException {
         try {
+            RepositoryFactory.getTweetRepository().deleteAll(zombie.getTweets());
+            
             Connection connection = DriverManager.getConnection(url, user, password);
             PreparedStatement statement = connection.prepareStatement(DELETE_ZOMBIE);
             
-            statement.setLong(1, id);
+            statement.setLong(1, zombie.getId());
             
             try {
                 statement.executeUpdate();
+                zombie.setId(-1);
             }
             finally {
                 statement.close();
@@ -192,7 +195,7 @@ public class ZombieRepository extends AbstractRepository<Zombie> {
             }
         }
         catch (SQLException ex) {
-            throw new PersistenceException("Error deleting zombie: " + id, ex);
+            throw new PersistenceException("Error deleting zombie: " + zombie, ex);
         }
     }
     
