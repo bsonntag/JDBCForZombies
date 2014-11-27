@@ -21,33 +21,45 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package pt.uminho.di.cesium.jdbcforzombies;
+package pt.uminho.di.cesium.jdbcforzombies.persistence;
 
-import java.util.Properties;
-import pt.uminho.di.cesium.jdbcforzombies.persistence.RepositoryFactory;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * Main
+ * AbstractRepository
  *
  * @author Benjamim Sonntag
  */
-public class Main {
+public abstract class AbstractRepository<T> implements Repository<T> {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Properties props = new Properties();
-        props.setProperty("user", "jdbcuser");
-        props.setProperty("password", "123456");
-        props.setProperty("host", "localhost");
-        props.setProperty("port", "3306");
-        props.setProperty("db_type", "mysql");
-        RepositoryFactory.setProperties(props);
-        
-        // TODO Create some zombies and save them to the database
-        
-        // TODO Add zome tweets to the zombies and save them to the database
+    @Override
+    public void saveAll(Collection<T> entities) throws PersistenceException {
+        for(T entity : entities) {
+            save(entity);
+        }
+    }
+
+    @Override
+    public Iterable<T> findAll(Collection<Long> ids) throws PersistenceException {
+        List<T> list = new ArrayList<>(ids.size());
+        for(long id : ids) {
+            list.add(find(id));
+        }
+        return list;
+    }
+
+    @Override
+    public void deleteAll(Collection<Long> ids) throws PersistenceException {
+        for(long id : ids) {
+            delete(id);
+        }
+    }
+
+    @Override
+    public boolean exists(long id) throws PersistenceException {
+        return find(id) != null;
     }
     
 }

@@ -33,14 +33,13 @@ import pt.uminho.di.cesium.jdbcforzombies.models.Zombie;
  *
  * @author Benjamim Sonntag
  */
-class ZombieTableModel extends AbstractTableModel {
-    private static final long serialVersionUID = 5214690495065085593L;
+public class ZombieTableModel extends AbstractTableModel {
     
     private static final String[] columnNames = { "ID", "Name", "Graveyard" };
     
     private final List<Zombie> zombies;
 
-    ZombieTableModel() {
+    public ZombieTableModel() {
         zombies = new ArrayList<>();
     }
     

@@ -25,7 +25,9 @@ package pt.uminho.di.cesium.jdbcforzombies;
 
 import java.util.Properties;
 import javax.swing.UnsupportedLookAndFeelException;
+import pt.uminho.di.cesium.jdbcforzombies.models.Zombie;
 import pt.uminho.di.cesium.jdbcforzombies.persistence.RepositoryFactory;
+import pt.uminho.di.cesium.jdbcforzombies.persistence.ZombieRepository;
 import pt.uminho.di.cesium.jdbcforzombies.views.GUI;
 
 /**

@@ -36,21 +36,33 @@ import pt.uminho.di.cesium.jdbcforzombies.persistence.ZombieRepository;
  *
  * @author Benjamim Sonntag
  */
-class ZombiePanel extends javax.swing.JPanel {
+public class ZombiePanel extends javax.swing.JPanel {
     private static final long serialVersionUID = 8930137921728543427L;
     
+    private final ZombieRepository zombieRepository;
     
     private final ZombieTableModel tableModel;
-    
-    
-    ZombiePanel() {
+
+    /**
+     * Creates new form ZombiePanel
+     */
+    public ZombiePanel() {
         initComponents();
         jTable1.setPreferredScrollableViewportSize(new Dimension(500, 70));
         jTable1.setFillsViewportHeight(true);
         tableModel = (ZombieTableModel)jTable1.getModel();
         
-        // TODO Retrieve the zombies from the database
-        // and add them to the table
+        zombieRepository = RepositoryFactory.getZombieRepository();
+        try {
+            Iterable<Zombie> zombies = zombieRepository.findAll();
+            for(Zombie zombie : zombies) {
+                System.out.println(zombie);
+                tableModel.addRow(zombie);
+            }
+        }
+        catch (PersistenceException ex) {
+            ex.printStackTrace();
+        }
         
         jTable1.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -183,8 +195,13 @@ class ZombiePanel extends javax.swing.JPanel {
         String graveyard = jTextField2.getText();
         if(name.isEmpty() == false && graveyard.isEmpty() == false) {
             Zombie z = new Zombie(name, graveyard);
-            // TODO Save the zombie in the database
-            tableModel.addRow(z);
+            try {
+                zombieRepository.save(z);
+                tableModel.addRow(z);
+            }
+            catch (PersistenceException ex) {
+                ex.printStackTrace();
+            }
             jTextField1.setText("");
             jTextField2.setText("");
         }

@@ -21,33 +21,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package pt.uminho.di.cesium.jdbcforzombies;
+package pt.uminho.di.cesium.jdbcforzombies.persistence;
 
-import java.util.Properties;
-import pt.uminho.di.cesium.jdbcforzombies.persistence.RepositoryFactory;
+import java.util.Collection;
 
 /**
- * Main
+ * Repository
  *
  * @author Benjamim Sonntag
  */
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Properties props = new Properties();
-        props.setProperty("user", "jdbcuser");
-        props.setProperty("password", "123456");
-        props.setProperty("host", "localhost");
-        props.setProperty("port", "3306");
-        props.setProperty("db_type", "mysql");
-        RepositoryFactory.setProperties(props);
-        
-        // TODO Create some zombies and save them to the database
-        
-        // TODO Add zome tweets to the zombies and save them to the database
-    }
+public interface Repository<T> {
+    
+    public void save(T entity) throws PersistenceException;
+    public void saveAll(Collection<T> entities) throws PersistenceException;
+    
+    public T find(long id) throws PersistenceException;
+    public Iterable<T> findAll() throws PersistenceException;
+    public Iterable<T> findAll(Collection<Long> ids) throws PersistenceException;
+    
+    public void delete(long id) throws PersistenceException;
+    public void deleteAll() throws PersistenceException;
+    public void deleteAll(Collection<Long> ids) throws PersistenceException;
+    
+    public long count() throws PersistenceException;
+    
+    public boolean exists(long id) throws PersistenceException;
     
 }
